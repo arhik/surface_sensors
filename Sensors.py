@@ -35,11 +35,11 @@ def read_accel_z():
 while True:
 
 	print "%s : %s : %s" %(read_accel_x(),read_accel_y(),read_accel_z())
-	# if read_accel_x() > 800 & read_accel_x() < 1000:
+	if read_accel_x > 200:
 
-	# 	subprocess.call(['xrandr','--output', 'eDP1', '--rotate', 'right'])
+		subprocess.call(['xrandr','--output', 'eDP1', '--rotate', 'right'])
 
-	# elif 65000 - read_accel_x() < 0:
-	# 	subprocess.call(['xrandr','--output', 'eDP1', '--rotate', 'left'])
+	elif read_accel_x <-200:
+		subprocess.call(['xrandr','--output', 'eDP1', '--rotate', 'left'])
 	time.sleep(1)
 

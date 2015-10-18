@@ -32,14 +32,35 @@ def read_accel_z():
 
 	return z
 
+prev_left = False
+prev_right = False
+prev_normal = False
 while True:
-
+	left = read_accel_x()>400
+	right = read_accel_x()<-400
+	normal = ~(left^right)
 	print "%s : %s : %s" %(read_accel_x(),read_accel_y(),read_accel_z())
-	if read_accel_x > 200:
-
-		subprocess.call(['xrandr','--output', 'eDP1', '--rotate', 'right'])
-
-	elif read_accel_x <-200:
-		subprocess.call(['xrandr','--output', 'eDP1', '--rotate', 'left'])
+	if(left):
+		if (left^prev_left):
+			subprocess.call(['xbacklight','-set','5'])
+			subprocess.call(['xrandr','--output', 'eDP1', '--rotate', 'left'])
+			subprocess.call(['xinput', 'set-prop', 'NTRG0001:01 1B96:1B05 Pen', 'Coordinate Transformation Matrix', '0', '-1', '1', '1', '0', '0', '0', '0', '1'])
+			subprocess.call(['xbacklight','-set','50'])
+	
+	elif right:
+		if(prev_right ^ right):
+			subprocess.call(['xbacklight','-set','5'])
+			subprocess.call(['xrandr','--output', 'eDP1', '--rotate', 'right'])
+			subprocess.call(['xinput', 'set-prop', 'NTRG0001:01 1B96:1B05 Pen', 'Coordinate Transformation Matrix', '0', '1', '0', '-1', '0', '1', '0', '0', '1'])
+			subprocess.call(['xbacklight','-set','50'])
+	elif normal:
+		if( prev_normal ^ normal):
+			subprocess.call(['xbacklight','-set','5'])
+			subprocess.call(['xrandr','--output','eDP1','--rotate','normal'])
+			subprocess.call(['xinput', 'set-prop', 'NTRG0001:01 1B96:1B05 Pen', 'Coordinate Transformation Matrix', '1', '0', '0', '0', '1', '0', '0', '0', '1'])
+			subprocess.call(['xbacklight','-set','50'])
 	time.sleep(1)
+	prev_left = left
+	prev_right = right
+	prev_normal = normal
 

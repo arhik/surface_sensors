@@ -1,13 +1,11 @@
 
 import time
-#import rospy
-#import time
-#from std_msgs.msg import Float64,String, Int64
-#from sensor import Sensor
+import rospy
+import time
+from std_msgs.msg import Float64,String, Int64
 import subprocess
 import bitstring
 import iio
-
 
 iioContext = iio.Context()
 devList = [ dev.name for dev in iioContext.devices ]
@@ -42,8 +40,11 @@ def read_accel_z():
 
 prev_left = False
 prev_right = False
-prev_normal = False
+
 def run():
+	prev_normal = False
+	prev_left = False
+	prev_right = False
 	while True:
 		left = read_accel_x()>400
 		right = read_accel_x()<-400

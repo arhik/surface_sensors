@@ -1,4 +1,9 @@
-Access surface pro 3 Sensors
+Access surface pro 3 Sensors using libiio library.
+
+dependencies:
+ - libiio (from https://github.com/analogdevicesinc/libiio)
+
+
 
 Example:
 	1. Rotate screen and input transformations.
